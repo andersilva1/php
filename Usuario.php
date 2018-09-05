@@ -59,6 +59,49 @@ class Usuario {
         }
     }
 
+    public static function getList(){
+
+        $sql = new Sql();
+
+        return $sql -> select("SELECT * FROM usuario ORDER BY login;");
+    }
+
+    public static function search($login){
+
+        $sql = new Sql();
+
+        return $sql -> select("SELECT * FROM usuario WHERE login LIKE :SEARCH ORDER BY login", array(
+            ':SEARCH' => "%" . $login . "%"
+        ));
+
+    }
+
+    public function login($login, $password){
+
+        $sql = new Sql();
+
+        $result = $sql -> select("SELECT * FROM usuario WHERE login = :LOGIN AND senha = :PASSWORD", array(
+            ":LOGIN" => $login,
+            ":PASSWORD" => $password
+
+        ));
+
+        if (count($result) > 0){
+
+            $row = $result[0];
+
+            $this -> setId($row['id']);
+            $this -> setLogin($row['login']);
+            $this -> setSenha($row['senha']);
+            $this -> setDtCadastro($row['dt_cadastro']);
+            
+        } else {
+            throw new Exception("Login e/ou senha invalidados");
+        
+        }
+
+    }
+
     public function __toString(){
         return json_encode(array(
             "id" => $this -> getId(),
