@@ -50,12 +50,7 @@ class Usuario {
 
         if (count($result) > 0){
 
-            $row = $result[0];
-
-            $this -> setId($row['id']);
-            $this -> setLogin($row['login']);
-            $this -> setSenha($row['senha']);
-            $this -> setDtCadastro($row['dt_cadastro']);
+            $this -> setData($result[0]);
         }
     }
 
@@ -88,18 +83,42 @@ class Usuario {
 
         if (count($result) > 0){
 
-            $row = $result[0];
+            $this -> setData($result[0]);
 
-            $this -> setId($row['id']);
-            $this -> setLogin($row['login']);
-            $this -> setSenha($row['senha']);
-            $this -> setDtCadastro($row['dt_cadastro']);
-            
         } else {
             throw new Exception("Login e/ou senha invalidados");
         
         }
 
+    }
+
+    public function setData($data){
+
+        $this -> setId($data['id']);
+        $this -> setLogin($data['login']);
+        $this -> setSenha($data['senha']);
+        $this -> setDtCadastro($data['dt_cadastro']);
+
+    }
+
+    public function insert(){
+
+        $sql = new Sql();
+
+        $result = $sql -> select("CALL usuario_insert(:LOGIN, :PASSWORD)", array(
+            ':LOGIN' => $this -> getLogin(),
+            ':PASSWORD' => $this -> getSenha()
+        ));
+
+        if (count($result) > 0) {
+            $this -> setData($result[0]);
+        }
+    }
+
+    public function __construct($login = "", $password = ""){
+
+        $this -> setLogin($login);
+        $this -> setSenha($password);
     }
 
     public function __toString(){

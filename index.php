@@ -19,9 +19,12 @@ echo json_encode($lista);*/
 echo json_encode($busca);*/
 
 //Carrega um usuário usando login e senha
-$usuario = new Usuario();
+/*$usuario = new Usuario();
 $usuario -> login ("root", "!@W#wsxew43");
+echo $usuario;*/
 
-echo $usuario;
+$aluno = new Usuario("pedro", "15s");
+$aluno -> insert();
+echo $aluno;
 
 ?>
