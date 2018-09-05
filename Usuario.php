@@ -115,6 +115,33 @@ class Usuario {
         }
     }
 
+    public function update($login, $password){
+
+        $this -> setLogin($login);
+        $this -> setSenha($password);
+
+        $sql = new Sql();
+
+        $sql -> query("UPDATE usuario SET login = :LOGIN, senha = ::PASSWORD WHERE id = :ID", array(
+            ':LOGIN' => $this -> getLogin(),
+            ':PASSWORD' => $this -> getSenha(),
+            ':ID' => $this -> getId()
+        ));
+    }
+
+    public function delete(){
+        $sql = new Sql();
+
+        $sql -> query("DELETE FROM usuario WHERE id = :ID", array(
+            ':ID' => $this -> getId()
+        ));
+
+        $this -> setId(0);
+        $this -> setLogin("");
+        $this -> setSenha("");
+        $this -> setDtCadastro(new DateTime());
+    }
+
     public function __construct($login = "", $password = ""){
 
         $this -> setLogin($login);

@@ -23,8 +23,22 @@ echo json_encode($busca);*/
 $usuario -> login ("root", "!@W#wsxew43");
 echo $usuario;*/
 
-$aluno = new Usuario("pedro", "15s");
+//Criando um novo usuário
+/*$aluno = new Usuario("pedro", "15s");
 $aluno -> insert();
-echo $aluno;
+echo $aluno;*/
+
+//Alterar Usuario
+/*$usuario = new Usuario();
+$usuario -> loadByID(8);
+$usuario -> update("professor", "255s55s");
+echo $usuario;*/
+
+$usuario = new Usuario();
+$usuario -> loadByID(8);
+$usuario -> delete();
+echo $usuario;
+
+
 
 ?>
